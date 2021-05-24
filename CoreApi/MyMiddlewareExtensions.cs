@@ -67,10 +67,20 @@ namespace CoreApi
             await memStream.CopyToAsync(responseOriginalBody);
             response.Body = responseOriginalBody;
 
+            if (context.Response == null)
+            {
+                Console.WriteLine("context.Response=null");
+            }
 
-            if(context.Response.ContentType.ToLower().Equals(""))
+
+
+            //  if (context.Response.ContentType.ToLower().Equals(string.Empty))
+
+            if (string.IsNullOrWhiteSpace(context.Response.ContentType))
+                Console.WriteLine("context.Response.ContentType=null");
 
             stopwatch.Stop();
+
             Console.WriteLine($"处理：{context.Request.Path}{context.Request.QueryString} 执行耗时：" + stopwatch.Elapsed.TotalSeconds + "s" + ",返回数据：" + responseBody);
         }
 
